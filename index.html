@@ -368,15 +368,47 @@ nav a{white-space:nowrap}
   .masters{grid-template-columns:1fr 1fr}
   .promos{grid-template-columns:1fr}
   .hero .facts{display:none}
-  .hero h1{font-size:44px}.hero.on h1{letter-spacing:.12em;text-indent:.12em}
-  .facts b{font-size:24px}
-  .panel{padding:20px;border-radius:26px}
-  .steps button{padding:12px;font-size:11px}.steps button b{font-size:17px}
+  .masters{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .mst{padding:22px 16px;border-radius:24px}.mst h3{font-size:24px;margin-top:16px}.mono{width:64px;height:64px;font-size:32px}
+  .mst q{font-size:13px}
+  .stats{gap:12px}.stat{padding:22px 18px;border-radius:22px}.stat b{font-size:44px}
+  h2{font-size:clamp(34px,10vw,44px)}
+  .promo{padding:30px 24px;min-height:0;border-radius:26px}.promo h3{font-size:30px}.promo .big{font-size:72px}
+  .gift{aspect-ratio:1.7;padding:22px}.gift h3{font-size:28px}.gift .sum{left:22px;bottom:18px;font-size:38px}
+  .rev-box{border-radius:28px}.rev-box .qm{font-size:140px}
+  .rate{font-size:110px}
+  .ba{border-radius:26px}.ba-tabs button{width:62px;height:62px;border-radius:18px}
+  .works{columns:2;column-gap:10px}.works figure{margin-bottom:10px;border-radius:18px}
+  .ct-card .addr{font-size:28px}.map,.map iframe{min-height:340px;border-radius:26px}
+  .lbx .pv,.lbx .nx{top:auto;bottom:24px}
+  .visit{padding:24px;border-radius:26px}
+  .day{width:60px}.slots{grid-template-columns:repeat(4,1fr)}
+  .marq-t{font-size:22px}
+  .hero h1{font-size:min(44px,11.2vw)}.hero.on h1{letter-spacing:.1em;text-indent:.1em}
+  .orn{gap:12px}
+  .panel{padding:18px;border-radius:26px;min-height:0}
+  .steps{gap:6px}.steps button{padding:12px 8px;font-size:0;border-radius:16px;text-align:center}.steps button b{font-size:16px}
+  .eyebrow{letter-spacing:.2em;font-size:11px;gap:10px}.eyebrow::after{width:24px}
   .row{grid-template-columns:1fr auto;gap:6px 12px}.row .add{grid-row:1/3;grid-column:2;align-self:center}.row .pr{font-size:19px;grid-column:1}
-  .rev-box{padding:36px 26px 28px}
-  .ct-card{padding:28px}.ct-card dl{grid-template-columns:1fr;gap:2px}.ct-card dd{margin-bottom:12px}
-  .hero .sub{letter-spacing:.3em;font-size:11px}
+  .list{max-height:62vh}
+  .rev-box{padding:36px 24px 28px}
+  .ct-card{padding:26px}.ct-card dl{grid-template-columns:1fr;gap:2px}.ct-card dd{margin-bottom:12px}
+  .hero .sub{letter-spacing:.3em;font-size:11px;text-indent:.3em}
   .ft{grid-template-columns:1fr}
+  .lead{font-size:16px}
+}
+@media (max-width:360px){
+  .wrap{width:calc(100% - 28px)}
+  .masters,.stats{grid-template-columns:1fr}
+  .logo small{display:none}
+  .hb{letter-spacing:.12em;font-size:12px;padding-right:20px}
+  .steps button b{font-size:14px}
+  .mcta a{font-size:14px;padding:14px 10px}
+}
+@media (max-height:500px) and (orientation:landscape){
+  .hero{min-height:auto;padding:90px 0 40px}
+  .hero h1{font-size:min(72px,12vh)}
+  .mcta{display:none}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv,.hero .fade,.hero h1 span,.hero .lily .p{opacity:1!important;transform:none!important;filter:none!important}}
 </style>
