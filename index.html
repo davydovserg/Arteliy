@@ -185,12 +185,25 @@ nav a:hover::after{right:0}
 .panel{background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:32px;padding:30px;min-height:540px}
 .pane{display:none}.pane.on{display:block;animation:pin .6s var(--ease)}
 @keyframes pin{from{opacity:0;transform:translateY(14px)}}
-.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:thin;-webkit-mask:linear-gradient(90deg,#000 92%,transparent)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;scroll-behavior:smooth;-webkit-mask:linear-gradient(90deg,transparent 0,#000 30px,#000 calc(100% - 50px),transparent)}
+.cats::-webkit-scrollbar{display:none}
+.cats button:first-child{margin-left:30px}.cats button:last-child{margin-right:44px}
 .cats button{white-space:nowrap;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:14px;transition:all .3s}
 .cats button.on{background:var(--teal-d);color:#fff;border-color:var(--teal-d)}
 .search{display:flex;align-items:center;gap:10px;margin:14px 0 6px;padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:#fff}
 .search input{border:0;outline:0;font:inherit;flex:1;background:none}
-.list{max-height:560px;overflow-y:auto;margin-top:6px;padding-right:6px}
+.list{margin-top:6px}
+.more{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:14px;padding:15px;border-radius:999px;border:1px dashed rgba(25,140,138,.35);background:rgba(255,255,255,.6);color:#1a5a59;font-size:14px;font-weight:600;letter-spacing:.04em;transition:all .4s}
+.more:hover{background:#fff;border-style:solid}
+.more svg{width:16px;height:16px;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(3px)}}
+.cats-box{position:relative}
+.cnav{position:absolute;top:0;z-index:2;width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid rgba(196,161,101,.6);color:#1a5a59;font-size:22px;line-height:1;display:grid;place-items:center;box-shadow:0 6px 18px -8px rgba(25,140,138,.5);transition:opacity .3s}
+.cnav.l{left:-6px}.cnav.r{right:-6px}
+.cnav.off{opacity:0;pointer-events:none}
+.cats-hint{display:none;font-size:12px;color:var(--muted);margin:2px 0 4px;letter-spacing:.02em}
+.cats.nudge{animation:nudge 1.6s var(--ease) .3s 1}
+@keyframes nudge{0%,100%{transform:none}40%{transform:translateX(-60px)}}
 .row{display:grid;grid-template-columns:1fr auto 44px;gap:16px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--line)}
 .row .nm{font-size:15px;font-weight:500}
 .row .ds{font-size:13px;color:var(--muted);margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -390,7 +403,8 @@ nav a{white-space:nowrap}
   .steps{gap:6px}.steps button{padding:12px 8px;font-size:0;border-radius:16px;text-align:center}.steps button b{font-size:16px}
   .eyebrow{letter-spacing:.2em;font-size:11px;gap:10px}.eyebrow::after{width:24px}
   .row{grid-template-columns:1fr auto;gap:6px 12px}.row .add{grid-row:1/3;grid-column:2;align-self:center}.row .pr{font-size:19px;grid-column:1}
-  .list{max-height:62vh}
+  .cats-hint{display:block}
+  .mcta .a1.has{flex:1.6;font-size:14px}
   .rev-box{padding:36px 24px 28px}
   .ct-card{padding:26px}.ct-card dl{grid-template-columns:1fr;gap:2px}.ct-card dd{margin-bottom:12px}
   .hero .sub{letter-spacing:.3em;font-size:11px;text-indent:.3em}
@@ -533,7 +547,8 @@ nav a{white-space:nowrap}
     <div class="book">
       <div class="panel rv">
         <div class="pane on" id="pane0">
-          <div class="cats" id="cats"></div>
+          <div class="cats-box"><button class="cnav l off" aria-label="Предыдущие категории">‹</button><div class="cats" id="cats"></div><button class="cnav r" aria-label="Ещё категории">›</button></div>
+          <div class="cats-hint">Листайте категории вбок →</div>
           <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5f7574" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" placeholder="Найти услугу: «френч», «балаяж», «брови»…" autocomplete="off"></label>
           <div class="list" id="list"></div>
         </div>
@@ -554,7 +569,7 @@ nav a{white-space:nowrap}
           <p class="note">Нажимая «Отправить», вы соглашаетесь с <a href="https://drive.google.com/file/d/1Kv95Rzp1uiypy0OgzTfH0oAZEqJ2-D4X/view?usp=sharing" target="_blank" rel="noopener" style="border-bottom:1px solid var(--gold-l)">обработкой персональных данных</a>.</p>
         </div>
       </div>
-      <aside class="visit rv">
+      <aside class="visit rv" id="visit" style="scroll-margin-top:84px">
         <svg class="bg-lily" viewBox="0 0 100 100" fill="#fff"><use href="#lily"/></svg>
         <h4>Ваш визит</h4>
         <div id="vlist"><p class="muted">Добавьте услуги из списка — они появятся здесь.</p></div>
@@ -747,14 +762,19 @@ function cnt(el){const to=+el.dataset.count,t0=performance.now();(function f(t){
 const S=window.SERVICES,cart=new Map();let cat=0;
 const catsEl=$('#cats'),listEl=$('#list');
 catsEl.innerHTML=S.map((c,i)=>`<button data-i="${i}" class="${i?'':'on'}">${c[0]}</button>`).join('');
-catsEl.onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=+b.dataset.i;$('#q').value='';$$('#cats button').forEach(x=>x.classList.toggle('on',x===b));renderList()};
-$('#q').oninput=renderList;
+catsEl.onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=+b.dataset.i;showAll=false;b.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});$('#q').value='';$$('#cats button').forEach(x=>x.classList.toggle('on',x===b));renderList()};
+$('#q').oninput=()=>{showAll=false;renderList()};let showAll=false;
+const cnav=()=>{$('.cnav.l').classList.toggle('off',catsEl.scrollLeft<8);$('.cnav.r').classList.toggle('off',catsEl.scrollLeft+catsEl.clientWidth>catsEl.scrollWidth-8)};
+catsEl.addEventListener('scroll',cnav,{passive:true});addEventListener('resize',cnav);
+$('.cnav.l').onclick=()=>catsEl.scrollBy({left:-catsEl.clientWidth*.7});$('.cnav.r').onclick=()=>catsEl.scrollBy({left:catsEl.clientWidth*.7});
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){cnav();if(catsEl.scrollWidth>catsEl.clientWidth+10)catsEl.classList.add('nudge');o.disconnect()}},{threshold:.6}).observe(catsEl);
 function key(c,i){return c+'_'+i}
 function renderList(){const q=$('#q').value.trim().toLowerCase();let rows=[];
  if(q){S.forEach((c,ci)=>c[1].forEach((s,i)=>{if((s[0]+' '+s[3]+' '+c[0]).toLowerCase().includes(q))rows.push([ci,i,s,c[0]])}))}
  else S[cat][1].forEach((s,i)=>rows.push([cat,i,s]));
- listEl.innerHTML=rows.length?rows.map(([ci,i,s,cn])=>`<div class="row ${cart.has(key(ci,i))?'sel':''}" data-k="${key(ci,i)}"><div><div class="nm">${s[0]}</div>${s[3]||cn?`<div class="ds">${cn?'<b style="color:var(--teal-d);font-weight:600">'+cn+'</b> · ':''}${s[3]||''}</div>`:''}</div><div class="pr">${s[1]?fmt(s[1]):s[2]}</div><button class="add" aria-label="Добавить">+</button></div>`).join(''):'<div class="empty">Ничего не нашли — напишите нам, подскажем.</div>'}
-listEl.onclick=e=>{const r=e.target.closest('.row');if(!r)return;const k=r.dataset.k;const[ci,i]=k.split('_').map(Number);
+ const LIM=8,total=rows.length,cut=!q&&!showAll&&total>LIM+2;if(cut)rows=rows.slice(0,LIM);
+ listEl.innerHTML=rows.length?rows.map(([ci,i,s,cn])=>`<div class="row ${cart.has(key(ci,i))?'sel':''}" data-k="${key(ci,i)}"><div><div class="nm">${s[0]}</div>${s[3]||cn?`<div class="ds">${cn?'<b style="color:var(--teal-d);font-weight:600">'+cn+'</b> · ':''}${s[3]||''}</div>`:''}</div><div class="pr">${s[1]?fmt(s[1]):s[2]}</div><button class="add" aria-label="Добавить">+</button></div>`).join('')+(cut?`<button class="more">Показать ещё ${total-LIM} ${(n=>n%10==1&&n%100!=11?'услугу':n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'услуги':'услуг')(total-LIM)}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>`:''):'<div class="empty">Ничего не нашли — напишите нам, подскажем.</div>'}
+listEl.onclick=e=>{if(e.target.closest('.more')){showAll=true;renderList();return}const r=e.target.closest('.row');if(!r)return;const k=r.dataset.k;const[ci,i]=k.split('_').map(Number);
  if(cart.has(k))cart.delete(k);else cart.set(k,{n:S[ci][1][i][0],p:S[ci][1][i][1],c:S[ci][0]});r.classList.toggle('sel');renderVisit()};
 renderList();
 
@@ -796,6 +816,7 @@ function renderVisit(){const it=[...cart.entries()];
  $('#vsum').textContent=fmt(it.reduce((a,[,v])=>a+v.p,0));
  $('#vwhen').textContent=selDay!=null&&selSlot?('🗓 '+days[selDay].toLocaleDateString('ru-RU',{weekday:'short',day:'numeric',month:'long'})+', '+selSlot):'';
  const ok=it.length&&$('#fname').value.trim().length>1&&$('#fphone').value.replace(/\D/g,'').length>=10;
+ const a1=$('.mcta .a1');if(a1){if(it.length){a1.classList.add('has');a1.textContent='Ваш визит · '+it.length+' · '+fmt(it.reduce((a,[,v])=>a+v.p,0));a1.href='#visit'}else{a1.classList.remove('has');a1.textContent='Записаться';a1.href='#services'}}
  const b=$('#send'),t=$('#sendT');
  if(!it.length){b.disabled=true;t.textContent='Выберите услуги'}
  else if(step===0){b.disabled=false;t.textContent='Дальше — дата и время'}
