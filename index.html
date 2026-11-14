@@ -102,6 +102,35 @@ nav a:hover::after{right:0}
 .hero .fade{opacity:0;transform:translateY(14px);transition:all 1.6s var(--ease)}
 .hero.on .fade{opacity:1;transform:none}
 .hero .ctas{display:flex;gap:22px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:30px}
+/* кнопки главного экрана */
+.hero .ctas{gap:16px;margin-top:36px}
+.hb{position:relative;display:inline-flex;align-items:center;gap:16px;height:76px;padding:0 14px 0 12px;border-radius:999px;text-align:left;overflow:hidden;isolation:isolate;
+ transition:transform .6s var(--ease),box-shadow .6s var(--ease),background .5s,color .5s}
+.hb-t{display:flex;flex-direction:column;font-family:var(--sans);font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.2;padding-right:14px}
+.hb-t small{font-size:12px;font-weight:500;letter-spacing:.02em;text-transform:none;margin-top:5px;opacity:.85}
+.hb-ic{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;flex:none;transition:transform .8s var(--ease)}
+.hb-ic svg{width:28px;height:28px}
+.hb-ar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:none;transition:transform .6s var(--ease),background .4s}
+.hb-ar svg{width:20px;height:20px}
+.hb-1{color:#fff;background:linear-gradient(135deg,#1c8e8c 0%,#12605f 55%,#0e4f4e 100%);
+ box-shadow:0 0 0 1px rgba(216,184,120,.55) inset,0 0 0 5px rgba(255,255,255,.55),0 22px 44px -16px rgba(14,79,78,.65)}
+.hb-1 .hb-ic{background:linear-gradient(145deg,#f5e6c4,#c9a35e);color:#0f5958;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.hb-1 .hb-ar{background:rgba(255,255,255,.12);color:#f3e2b8}
+.hb-1::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(105deg,transparent 35%,rgba(255,240,205,.45) 50%,transparent 65%);transform:translateX(-120%);animation:hbshine 5s ease-in-out 3.2s infinite}
+@keyframes hbshine{0%{transform:translateX(-120%)}28%,100%{transform:translateX(120%)}}
+.hb-2{color:#174c4b;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding-right:22px;
+ box-shadow:0 0 0 1px rgba(196,161,101,.6) inset,0 18px 40px -22px rgba(14,79,78,.45)}
+.hb-2 .hb-ic{background:#e6f4f2;color:#12605f}
+.hb-2 .hb-t small{color:#4f6260;opacity:1}
+.hb:hover{transform:translateY(-4px)}
+.hb-1:hover{box-shadow:0 0 0 1px rgba(216,184,120,.8) inset,0 0 0 6px rgba(255,255,255,.7),0 30px 54px -16px rgba(14,79,78,.7)}
+.hb-1:hover .hb-ar{transform:translateX(4px);background:rgba(243,226,184,.22)}
+.hb:hover .hb-ic{transform:rotate(-12deg) scale(1.06)}
+.hb:hover .pl{transform:rotate(-16deg)}.hb:hover .pr{transform:rotate(16deg)}
+.hb-2:hover{background:#fff;box-shadow:0 0 0 1px rgba(196,161,101,.9) inset,0 24px 46px -20px rgba(14,79,78,.5)}
+.hb:active{transform:translateY(-1px) scale(.985)}
+.hb:focus-visible{outline:2px solid #c9a35e;outline-offset:6px}
+@media (max-width:600px){.hero .ctas{flex-direction:column;align-items:stretch;width:100%;max-width:340px;margin-inline:auto}.hb{height:70px;gap:12px}.hb-t{font-size:13px;letter-spacing:.07em;white-space:nowrap;padding-right:4px}.hb-ic{width:48px;height:48px}.hb-1 .hb-ar{margin-left:auto}}
 .linkish{font-size:15px;color:var(--teal-dd);border-bottom:1px solid rgba(196,161,101,.6);padding-bottom:2px;font-weight:400}
 .facts{position:relative;z-index:2;display:flex;justify-content:center;margin-top:auto;padding-top:40px;flex-wrap:wrap}
 .facts div{padding:4px 30px;border-left:1px solid rgba(120,150,148,.25);font-size:12px;letter-spacing:.06em;color:#6f8583;text-align:center}
@@ -407,8 +436,15 @@ nav a{white-space:nowrap}
     </div>
     <p class="script fade" style="transition-delay:1.5s">оазис спокойствия в центре города</p>
     <div class="ctas fade" style="transition-delay:1.8s">
-      <a class="btn btn-main" href="#services"><span class="bud"><svg class="lily" viewBox="0 0 100 100" fill="currentColor"><use href="#lily"/></svg></span>Записаться онлайн</a>
-      <a class="linkish" href="#services">Услуги и цены</a>
+      <a class="hb hb-1" href="#services">
+        <span class="hb-ic"><svg class="lily" viewBox="0 0 100 100" fill="currentColor"><use href="#lily"/></svg></span>
+        <span class="hb-t">Записаться онлайн<small>свободное время на 2 месяца</small></span>
+        <span class="hb-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="hb hb-2" href="#services">
+        <span class="hb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M7 4h10a1 1 0 0 1 1 1v15l-3-2-3 2-3-2-3 2V5a1 1 0 0 1 1-1zM9 9h6M9 13h4"/></svg></span>
+        <span class="hb-t">Услуги и цены<small>158 процедур · от 40 ₽</small></span>
+      </a>
     </div>
   </div>
     <div class="facts fade" style="transition-delay:2.1s">
@@ -670,7 +706,7 @@ $('#burger').onclick=()=>$('#nav').classList.toggle('open');
 $$('#nav a').forEach(a=>a.onclick=()=>$('#nav').classList.remove('open'));
 
 /* hero on */
-requestAnimationFrame(()=>setTimeout(()=>$('#hero').classList.add('on'),80));
+setTimeout(()=>$('#hero').classList.add('on'),120);
 
 /* hero video: boomerang loop (вперёд-назад без шва) */
 (()=>{const v=$('#heroV');if(!v)return;const m=innerWidth<700&&innerHeight>innerWidth;const src=m?'img/hero-m.mp4':'img/hero.mp4';
